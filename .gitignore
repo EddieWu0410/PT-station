@@ -1,0 +1,9 @@
+target/
+.vscode/
+torrents/
+appeals/
+migrations/
+front/node_modules
+recommend/user_seed_graph.txt
+recommend/model/__pycache__/
+recommend/utils/__pycache__/
