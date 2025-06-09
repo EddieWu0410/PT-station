@@ -1,0 +1,43 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+
+    <persistence-unit name="myPersistenceUnit">
+        <!-- 指定 JPA 提供者 -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- 仅保留 UserPT 实体，避免其它实体的 @MapsId 映射错误 -->
+        <!-- 全限定名，确保 JPA 真正注册到 EMF -->        
+        <class>entity.UserPT</class>
+        <class>entity.Seed</class>
+        <class>entity.User</class>
+        <class>entity.Notice</class>
+        <class>entity.BegInfo</class>
+        <class>entity.Post</class>
+        <class>entity.Profile</class>
+        <class>entity.Appeal</class>
+        <class>entity.SeedDownload</class>
+        <class>entity.UserVotes</class>
+        <class>entity.VipSeed</class>
+        <class>entity.UserStar</class>
+        <class>entity.PostReply</class>
+        <class>entity.TransRecord</class>
+        <class>entity.SubmitSeed</class>
+        <class>entity.UserInvite</class>
+       <!-- 数据库连接配置 -->
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="${DB_URL}"/>
+            <property name="javax.persistence.jdbc.user" value="${DB_USER}"/>
+            <property name="javax.persistence.jdbc.password" value="${DB_PASSWORD}"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+
+            <!-- Hibernate 配置 -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

@@ -1,0 +1,133 @@
+/* HomePage 特定样式 */
+@import './SharedStyles.css';
+
+/* 表格区域样式 */
+.emerald-table-section {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  padding: 30px;
+  margin: 30px auto;
+  box-shadow: 
+    0 20px 60px rgba(45, 80, 22, 0.12),
+    0 8px 25px rgba(144, 238, 144, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(144, 238, 144, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.emerald-table-section::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #90ee90 0%, 
+    #98fb98 25%, 
+    #f0fff0 50%, 
+    #98fb98 75%, 
+    #90ee90 100%);
+  border-radius: 27px;
+  z-index: -1;
+  animation: borderGlow 4s ease-in-out infinite;
+}
+
+/* 表格样式 */
+.emerald-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Lora', serif;
+  background: transparent;
+}
+
+.emerald-table thead {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+}
+
+.emerald-table th {
+  padding: 16px 20px;
+  text-align: left;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border-bottom: 3px solid #90ee90;
+  position: relative;
+}
+
+.emerald-table th:first-child {
+  border-radius: 15px 0 0 0;
+}
+
+.emerald-table th:last-child {
+  border-radius: 0 15px 0 0;
+}
+
+.emerald-table tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(144, 238, 144, 0.2);
+}
+
+.emerald-table tbody tr:hover {
+  background: rgba(144, 238, 144, 0.1);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(144, 238, 144, 0.15);
+}
+
+.emerald-table td {
+  padding: 14px 20px;
+  color: #2d5016;
+  font-size: 15px;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.emerald-table tbody tr:hover td {
+  color: #1a5c1a;
+}
+
+/* 表格链接样式 */
+.emerald-table a {
+  color: #2d5016;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 4px 8px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.emerald-table a:hover {
+  color: #1a5c1a;
+  background: rgba(144, 238, 144, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(144, 238, 144, 0.3);
+}
+
+/* 响应式表格设计 */
+@media (max-width: 768px) {
+  .emerald-table-section {
+    margin: 20px 10px;
+    padding: 20px 15px;
+  }
+  
+  .emerald-table {
+    font-size: 14px;
+  }
+  
+  .emerald-table th,
+  .emerald-table td {
+    padding: 12px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .emerald-table th,
+  .emerald-table td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}

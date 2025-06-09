@@ -1,0 +1,456 @@
+/* AppealPage 特定样式 - 翡翠园林风格 */
+@import './SharedStyles.css';
+
+/* 申诉页面容器 */
+.appeal-page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 20%, #8fbc8f 40%, #98fb98 60%, #f0fff0 100%);
+  position: relative;
+  font-family: 'Lora', serif;
+  overflow-x: hidden;
+  display: flex;
+}
+
+/* 背景装饰元素 */
+.appeal-page-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(144, 238, 144, 0.08) 0%, transparent 50%);
+  animation: backgroundShift 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 侧栏样式 */
+.appeal-sidebar {
+  width: 300px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-right: 3px solid rgba(144, 238, 144, 0.3);
+  padding: 0;
+  position: relative;
+  z-index: 10;
+  box-shadow: 4px 0 20px rgba(45, 80, 22, 0.1);
+}
+
+.appeal-sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, 
+    rgba(144, 238, 144, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 50%, 
+    rgba(144, 238, 144, 0.05) 100%);
+  z-index: -1;
+}
+
+/* 侧栏标题 */
+.appeal-sidebar-title {
+  text-align: center;
+  padding: 25px 20px 20px 20px;
+  color: #2d5016;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(45, 80, 22, 0.1);
+  border-bottom: 2px solid rgba(144, 238, 144, 0.2);
+  background: linear-gradient(135deg, rgba(144, 238, 144, 0.1), rgba(255, 255, 255, 0.1));
+}
+
+/* 申诉列表容器 */
+.appeal-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 0 15px;
+}
+
+/* 申诉项目 */
+.appeal-list-item {
+  margin: 0;
+  padding: 18px 15px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(45, 80, 22, 0.08);
+}
+
+.appeal-list-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(144, 238, 144, 0.1), 
+    transparent);
+  transition: left 0.5s ease;
+}
+
+.appeal-list-item:hover::before {
+  left: 100%;
+}
+
+.appeal-list-item:hover {
+  transform: translateX(8px);
+  box-shadow: 0 8px 25px rgba(45, 80, 22, 0.15);
+}
+
+/* 选中状态 */
+.appeal-list-item.selected {
+  background: rgba(144, 238, 144, 0.15);
+  border-color: rgba(144, 238, 144, 0.5);
+  transform: translateX(8px);
+  box-shadow: 0 8px 25px rgba(144, 238, 144, 0.2);
+}
+
+/* 审核状态样式 */
+.appeal-list-item.approved {
+  border-color: rgba(67, 160, 71, 0.6);
+  color: #2e7d32;
+}
+
+.appeal-list-item.pending {
+  border-color: rgba(229, 57, 53, 0.6);
+  color: #c62828;
+}
+
+/* 状态标签 */
+.appeal-status-label {
+  float: right;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.appeal-status-label.approved {
+  background: rgba(67, 160, 71, 0.1);
+  color: #2e7d32;
+}
+
+.appeal-status-label.pending {
+  background: rgba(229, 57, 53, 0.1);
+  color: #c62828;
+}
+
+/* 主内容区域 */
+.appeal-main-content {
+  flex: 1;
+  padding: 40px 50px;
+  position: relative;
+  z-index: 10;
+}
+
+/* 详情标题 */
+.appeal-detail-title {
+  margin-bottom: 30px;
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-shadow: 0 4px 12px rgba(45, 80, 22, 0.4);
+  letter-spacing: 1px;
+}
+
+/* 详情卡片 */
+.appeal-detail-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  padding: 35px 40px;
+  margin-bottom: 35px;
+  box-shadow: 
+    0 20px 60px rgba(45, 80, 22, 0.12),
+    0 8px 25px rgba(144, 238, 144, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(144, 238, 144, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.appeal-detail-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #90ee90 0%, 
+    #98fb98 25%, 
+    #f0fff0 50%, 
+    #98fb98 75%, 
+    #90ee90 100%);
+  border-radius: 27px;
+  z-index: -1;
+  animation: borderGlow 4s ease-in-out infinite;
+}
+
+/* 详情项目 */
+.appeal-detail-item {
+  margin-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #2d5016;
+}
+
+.appeal-detail-item b {
+  color: #1a5c1a;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+/* 文件查看器样式 */
+.file-viewer-container {
+  margin-top: 15px;
+  padding: 20px;
+  background: rgba(144, 238, 144, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(144, 238, 144, 0.2);
+}
+
+.file-viewer-iframe {
+  border: 2px solid rgba(144, 238, 144, 0.3);
+  border-radius: 12px;
+  width: 100%;
+  height: 400px;
+  transition: all 0.3s ease;
+}
+
+.file-viewer-iframe:hover {
+  border-color: rgba(144, 238, 144, 0.5);
+  box-shadow: 0 4px 15px rgba(144, 238, 144, 0.2);
+}
+
+.file-download-link {
+  color: #2d5016;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 20px;
+  background: rgba(144, 238, 144, 0.1);
+  border-radius: 10px;
+  display: inline-block;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(144, 238, 144, 0.3);
+}
+
+.file-download-link:hover {
+  background: rgba(144, 238, 144, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(144, 238, 144, 0.3);
+}
+
+/* 按钮容器 */
+.appeal-buttons-container {
+  display: flex;
+  gap: 35px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+/* 审核按钮样式 */
+.appeal-btn {
+  border: none;
+  border-radius: 15px;
+  padding: 15px 40px;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Lora', serif;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.appeal-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+
+.appeal-btn:hover::before {
+  width: 120px;
+  height: 120px;
+}
+
+.appeal-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* 通过按钮 */
+.appeal-btn-approve {
+  background: linear-gradient(135deg, #43a047, #2e7d32);
+  color: white;
+}
+
+.appeal-btn-approve:disabled {
+  background: linear-gradient(135deg, #bdbdbd, #9e9e9e);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.appeal-btn-approve:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 拒绝按钮 */
+.appeal-btn-reject {
+  background: linear-gradient(135deg, #e53935, #c62828);
+  color: white;
+}
+
+.appeal-btn-reject:disabled {
+  background: linear-gradient(135deg, #bdbdbd, #9e9e9e);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.appeal-btn-reject:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 加载和错误状态 */
+.appeal-loading,
+.appeal-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.appeal-error {
+  color: #ffcdd2;
+}
+
+/* 动画效果 */
+@keyframes backgroundShift {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(1deg); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .appeal-page-container {
+    flex-direction: column;
+  }
+  
+  .appeal-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 3px solid rgba(144, 238, 144, 0.3);
+  }
+  
+  .appeal-list-container {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0 15px 20px 15px;
+  }
+  
+  .appeal-list-item {
+    min-width: 200px;
+    flex-shrink: 0;
+  }
+  
+  .appeal-main-content {
+    padding: 20px 25px;
+  }
+  
+  .appeal-detail-title {
+    font-size: 1.8rem;
+  }
+  
+  .appeal-detail-card {
+    padding: 25px 30px;
+  }
+  
+  .appeal-buttons-container {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .appeal-btn {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .appeal-sidebar-title {
+    font-size: 1.2rem;
+    padding: 20px 15px 15px 15px;
+  }
+  
+  .appeal-main-content {
+    padding: 15px 20px;
+  }
+  
+  .appeal-detail-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .appeal-detail-card {
+    padding: 20px 25px;
+    margin-bottom: 25px;
+  }
+  
+  .appeal-detail-item {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .appeal-buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .appeal-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+}

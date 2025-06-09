@@ -1,0 +1,460 @@
+/* 翡翠庄园 - 求种页面欧式园林风格样式 */
+
+/* 引入Google字体 */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;500;600&display=swap');
+
+/* 页面基础容器样式 */
+.begseed-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 20%, #8fbc8f 40%, #98fb98 60%, #f0fff0 100%);
+  position: relative;
+  font-family: 'Lora', serif;
+  overflow-x: hidden;
+}
+
+/* 背景装饰元素 */
+.begseed-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(144, 238, 144, 0.08) 0%, transparent 50%);
+  animation: backgroundShift 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 内容区域 */
+.begseed-content {
+  position: relative;
+  z-index: 10;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* 页面标题 */
+.begseed-title {
+  text-align: center;
+  margin: 80px 0 40px 0;
+  color: #2d5016;
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(45, 80, 22, 0.2);
+  animation: titleFloat 6s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.begseed-title-icon {
+  color: #90ee90;
+  filter: drop-shadow(0 2px 4px rgba(144, 238, 144, 0.4));
+  animation: iconPulse 3s ease-in-out infinite;
+}
+
+/* 发布按钮 */
+.begseed-publish-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.begseed-publish-btn {
+  font-size: 18px;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, #90ee90 0%, #2d5016 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-family: 'Lora', serif;
+  box-shadow: 
+    0 8px 25px rgba(45, 80, 22, 0.3),
+    0 4px 12px rgba(144, 238, 144, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 1px;
+}
+
+.begseed-publish-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 12px 35px rgba(45, 80, 22, 0.4),
+    0 6px 18px rgba(144, 238, 144, 0.3);
+}
+
+.begseed-publish-btn:disabled {
+  background: linear-gradient(135deg, #a0a0a0 0%, #808080 100%);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 12px rgba(128, 128, 128, 0.2);
+}
+
+.begseed-publish-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.begseed-publish-btn:hover::before {
+  left: 100%;
+}
+
+/* 发布表单 */
+.begseed-form-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  box-shadow: 
+    0 20px 60px rgba(45, 80, 22, 0.15),
+    0 8px 25px rgba(144, 238, 144, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(144, 238, 144, 0.2);
+  position: relative;
+  animation: containerFloat 8s ease-in-out infinite;
+}
+
+.begseed-form-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #90ee90 0%, 
+    #98fb98 25%, 
+    #f0fff0 50%, 
+    #98fb98 75%, 
+    #90ee90 100%);
+  border-radius: 27px;
+  z-index: -1;
+  animation: borderGlow 4s ease-in-out infinite;
+}
+
+.begseed-form-title {
+  color: #2d5016;
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.begseed-form-group {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.begseed-form-label {
+  color: #2d5016;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: 'Lora', serif;
+  letter-spacing: 0.5px;
+}
+
+.begseed-form-input {
+  padding: 15px 20px;
+  border-radius: 15px;
+  border: 2px solid rgba(144, 238, 144, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  font-family: 'Lora', serif;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.begseed-form-input:focus {
+  outline: none;
+  border-color: #90ee90;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 0 3px rgba(144, 238, 144, 0.2);
+  transform: translateY(-2px);
+}
+
+.begseed-form-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 35px;
+}
+
+.begseed-form-btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Lora', serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.begseed-form-btn-primary {
+  background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(45, 80, 22, 0.3);
+}
+
+.begseed-form-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 80, 22, 0.4);
+}
+
+.begseed-form-btn-secondary {
+  background: linear-gradient(135deg, #999 0%, #777 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(119, 119, 119, 0.3);
+}
+
+.begseed-form-btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(119, 119, 119, 0.4);
+}
+
+/* 加载和错误状态 */
+.begseed-loading {
+  text-align: center;
+  margin: 60px 0;
+  color: #4a7c59;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.begseed-error {
+  text-align: center;
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 600px;
+  background: rgba(255, 235, 238, 0.9);
+  color: #c62828;
+  border-radius: 15px;
+  border: 2px solid rgba(198, 40, 40, 0.2);
+  font-weight: 500;
+}
+
+/* 求种列表 */
+.begseed-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* 求种卡片 */
+.begseed-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 
+    0 15px 40px rgba(45, 80, 22, 0.12),
+    0 6px 20px rgba(144, 238, 144, 0.08);
+  border: 2px solid rgba(144, 238, 144, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.begseed-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(144, 238, 144, 0.1), transparent);
+  transition: left 0.5s;
+  z-index: 0;
+}
+
+.begseed-card:hover::before {
+  left: 100%;
+}
+
+.begseed-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 25px 60px rgba(45, 80, 22, 0.18),
+    0 10px 30px rgba(144, 238, 144, 0.12);
+  border-color: rgba(74, 124, 89, 0.4);
+}
+
+.begseed-card-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* 已过期/已完成的卡片 */
+.begseed-card-expired {
+  background: rgba(245, 245, 245, 0.9);
+  color: #888;
+  opacity: 0.7;
+}
+
+.begseed-card-expired:hover {
+  transform: translateY(-4px);
+  opacity: 0.8;
+}
+
+.begseed-card-title {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #2d5016;
+  font-family: 'Playfair Display', serif;
+  line-height: 1.3;
+}
+
+.begseed-card-expired .begseed-card-title {
+  color: #888;
+}
+
+.begseed-card-info {
+  margin-bottom: 12px;
+  color: #4a7c59;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.begseed-card-expired .begseed-card-info {
+  color: #999;
+}
+
+.begseed-card-info-icon {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.begseed-card-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+.begseed-status-active {
+  background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+  color: #2d5016;
+  border: 1px solid rgba(45, 80, 22, 0.2);
+}
+
+.begseed-status-completed {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  color: #1565c0;
+  border: 1px solid rgba(21, 101, 192, 0.2);
+}
+
+.begseed-status-expired {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+  color: #666;
+  border: 1px solid rgba(102, 102, 102, 0.2);
+}
+
+/* 动画效果 */
+@keyframes backgroundShift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(1deg); }
+  66% { transform: translate(-20px, 20px) rotate(-0.5deg); }
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes containerFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .begseed-container {
+    padding: 20px 10px;
+  }
+  
+  .begseed-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  
+  .begseed-list {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .begseed-form-container {
+    padding: 30px 20px;
+    margin: 0 10px 30px 10px;
+  }
+  
+  .begseed-form-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .begseed-form-label {
+    width: auto;
+  }
+  
+  .begseed-form-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .begseed-card {
+    padding: 25px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .begseed-title {
+    font-size: 28px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .begseed-publish-btn {
+    padding: 14px 30px;
+    font-size: 16px;
+  }
+  
+  .begseed-form-title {
+    font-size: 24px;
+  }
+}

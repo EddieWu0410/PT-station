@@ -1,0 +1,208 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+  margin: 0;
+  font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  margin-bottom: 40px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 22px;
+  color: #3a4a6b;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+.nav-item:hover {
+  background: #e0e7ff;
+  color: #1a237e;
+}
+.nav-item.active {
+  background: #e0e7ff;
+  color: #1a237e;
+  border-bottom: 3px solid #1a237e;
+}
+
+.search-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.search-input {
+  width: 340px;
+  font-size: 18px;
+  padding: 10px 14px;
+  border: 1px solid #bfcfff;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+}
+.search-btn {
+  font-size: 20px;
+  padding: 10px 18px;
+  border: 1px solid #bfcfff;
+  border-left: none;
+  background: #e0e7ff;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+}
+
+.advanced-search {
+  margin: 18px 0 24px 0;
+  font-size: 16px;
+}
+.advanced-input {
+  margin-left: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #bfcfff;
+  width: 220px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 32px;
+  justify-content: center;
+}
+.pagination button {
+  padding: 6px 18px;
+  border-radius: 6px;
+  border: 1px solid #bfcfff;
+  background: #f5f7ff;
+  cursor: pointer;
+  font-size: 15px;
+}
+.page-num {
+  color: #1a237e;
+  font-weight: bold;
+}
+.page-info {
+  margin-left: 8px;
+  font-size: 15px;
+}
+
+.table-section {
+  width: 90vw;
+  margin: 18px auto 0 auto;
+  background: #f8faff;
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid #e0e7ff;
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 14px 10px;
+  text-align: left;
+  font-size: 18px;
+}
+th {
+  font-size: 22px;
+  color: #1a237e;
+  border-bottom: 2px solid #bfcfff;
+}
+td {
+  color: #3a4a6b;
+  border-bottom: 1px solid #e0e7ff;
+}
+
+.area-tabs {
+  margin-bottom: 10px;
+}
+.area-tab {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 17px;
+  color: #3a4a6b;
+  padding: 4px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.area-tab:hover {
+  background: #e0e7ff;
+  color: #1a237e;
+}
+.area-tab.active {
+  background: #e0e7ff;
+  color: #1a237e;
+  border-bottom: 3px solid #1a237e;
+}
+
+.movie-table {
+  width: 100%;
+  table-layout: fixed;
+}
+.movie-table th, .movie-table td {
+  width: 33.33%;
+  text-align: center;
+}

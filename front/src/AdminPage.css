@@ -1,0 +1,447 @@
+/* AdminPage 特定样式 - 翡翠园林风格 */
+@import './SharedStyles.css';
+
+/* 管理员页面容器 */
+.admin-page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 20%, #8fbc8f 40%, #98fb98 60%, #f0fff0 100%);
+  position: relative;
+  font-family: 'Lora', serif;
+  overflow-x: hidden;
+}
+
+/* 背景装饰元素 */
+.admin-page-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(144, 238, 144, 0.08) 0%, transparent 50%);
+  animation: backgroundShift 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 主内容区域 */
+.admin-main-content {
+  position: relative;
+  z-index: 10;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 页面标题 */
+.admin-title {
+  text-align: center;
+  margin: 30px 0 40px 0;
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 
+    0 4px 12px rgba(45, 80, 22, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.admin-title::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #90ee90, transparent);
+  border-radius: 2px;
+  box-shadow: 0 0 15px rgba(144, 238, 144, 0.6);
+}
+
+/* 系统参数卡片 */
+.admin-config-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  padding: 25px 35px;
+  margin-bottom: 40px;
+  box-shadow: 
+    0 20px 60px rgba(45, 80, 22, 0.12),
+    0 8px 25px rgba(144, 238, 144, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(144, 238, 144, 0.2);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.admin-config-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #90ee90 0%, 
+    #98fb98 25%, 
+    #f0fff0 50%, 
+    #98fb98 75%, 
+    #90ee90 100%);
+  border-radius: 27px;
+  z-index: -1;
+  animation: borderGlow 4s ease-in-out infinite;
+}
+
+.admin-config-label {
+  font-weight: 700;
+  color: #2d5016;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.admin-config-item {
+  color: #4a7c59;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 16px;
+  background: rgba(144, 238, 144, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(144, 238, 144, 0.3);
+  transition: all 0.3s ease;
+}
+
+.admin-config-item:hover {
+  background: rgba(144, 238, 144, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(144, 238, 144, 0.3);
+}
+
+/* 用户列表区域 */
+.admin-section {
+  margin-bottom: 40px;
+}
+
+.admin-section-title {
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+.admin-section-title.cheat {
+  color: #ffcdd2;
+}
+
+.admin-section-title.suspicious {
+  color: #fff3e0;
+}
+
+/* 表格容器 - 使用与HomePage一致的样式 */
+.admin-table-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  padding: 0;
+  margin: 30px 0;
+  box-shadow: 
+    0 20px 60px rgba(45, 80, 22, 0.12),
+    0 8px 25px rgba(144, 238, 144, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(144, 238, 144, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-table-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #90ee90 0%, 
+    #98fb98 25%, 
+    #f0fff0 50%, 
+    #98fb98 75%, 
+    #90ee90 100%);
+  border-radius: 27px;
+  z-index: -1;
+  animation: borderGlow 4s ease-in-out infinite;
+}
+
+/* 表格样式 */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Lora', serif;
+  background: transparent;
+}
+
+.admin-table thead {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+}
+
+.admin-table th {
+  padding: 18px 24px;
+  text-align: left;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border-bottom: 3px solid #90ee90;
+  position: relative;
+}
+
+.admin-table th:first-child {
+  border-radius: 23px 0 0 0;
+}
+
+.admin-table th:last-child {
+  border-radius: 0 23px 0 0;
+}
+
+.admin-table tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(144, 238, 144, 0.2);
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(144, 238, 144, 0.1);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(144, 238, 144, 0.15);
+}
+
+.admin-table tbody tr:last-child:hover td:first-child {
+  border-radius: 0 0 0 23px;
+}
+
+.admin-table tbody tr:last-child:hover td:last-child {
+  border-radius: 0 0 23px 0;
+}
+
+.admin-table td {
+  padding: 16px 24px;
+  color: #2d5016;
+  font-size: 15px;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.admin-table tbody tr:hover td {
+  color: #1a5c1a;
+}
+
+/* 状态文本样式 */
+.status-banned {
+  color: #e53935 !important;
+  font-weight: 600;
+}
+
+.status-normal {
+  color: #43a047 !important;
+  font-weight: 600;
+}
+
+.status-warning {
+  color: #ff9800 !important;
+  font-weight: 600;
+}
+
+/* 按钮样式 */
+.admin-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 8px 18px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Lora', serif;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+
+.admin-btn:hover::before {
+  width: 100px;
+  height: 100px;
+}
+
+.admin-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.admin-btn-unban {
+  background: linear-gradient(135deg, #13F31E, #43a047);
+  color: white;
+}
+
+.admin-btn-ban {
+  background: linear-gradient(135deg, #e53935, #c62828);
+  color: white;
+}
+
+/* 导航按钮区域 */
+.admin-nav-buttons {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.admin-nav-btn {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 15px 35px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Lora', serif;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(45, 80, 22, 0.3);
+}
+
+.admin-nav-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(144, 238, 144, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+
+.admin-nav-btn:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+.admin-nav-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(45, 80, 22, 0.4);
+}
+
+.admin-nav-btn.appeal {
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+}
+
+.admin-nav-btn.migration {
+  background: linear-gradient(135deg, #43a047, #388e3c);
+}
+
+.admin-nav-btn.promotion {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+}
+
+/* 动画效果 */
+@keyframes backgroundShift {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(1deg); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .admin-main-content {
+    padding: 0 15px;
+  }
+  
+  .admin-title {
+    font-size: 2.2rem;
+  }
+  
+  .admin-config-card {
+    padding: 20px 25px;
+    gap: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .admin-table-container {
+    margin: 20px 0;
+    border-radius: 20px;
+  }
+  
+  .admin-table th,
+  .admin-table td {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  
+  .admin-nav-buttons {
+    gap: 20px;
+  }
+  
+  .admin-nav-btn {
+    padding: 12px 28px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-title {
+    font-size: 1.8rem;
+  }
+  
+  .admin-config-card {
+    padding: 15px 20px;
+  }
+  
+  .admin-table th,
+  .admin-table td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .admin-nav-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .admin-nav-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}
