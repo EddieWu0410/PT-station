@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import './App.css';
+import './SharedStyles.css';
 import { API_BASE_URL } from "./config";
 
 export default function TorrentDetailPage() {
@@ -14,11 +15,7 @@ export default function TorrentDetailPage() {
 
   // 下载种子
   const handleClick = () => {
-    // 构造下载 URL，包含 userId 和 torrentId 参数
-    console.log(torrentId)
     const downloadUrl = `${API_BASE_URL}/api/get-torrent?userId=${encodeURIComponent(userId)}&torrentId=${encodeURIComponent(torrentId)}`;
-
-    // 发起 GET 请求下载文件
     fetch(downloadUrl)
       .then(response => {
         if (!response.ok) {
@@ -27,7 +24,6 @@ export default function TorrentDetailPage() {
         return response.blob();
       })
       .then(blob => {
-        // 创建下载链接并触发下载
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -89,69 +85,139 @@ export default function TorrentDetailPage() {
       });
   }, [torrentId]);
 
-  if (loading) return <div className="container"><h1>加载中...</h1></div>;
-  if (error) return <div className="container"><h1>加载失败: {error}</h1></div>;
-  if (!detail) return <div className="container"><h1>未找到详情</h1></div>;
+  if (loading) return (
+    <div className="emerald-home-container">
+      <div className="emerald-content">
+        <div className="emerald-loading-text">
+          加载中...
+        </div>
+      </div>
+    </div>
+  );
+  if (error) return (
+    <div className="emerald-home-container">
+      <div className="emerald-content">
+        <div className="emerald-error-text">
+          加载失败: {error}
+        </div>
+      </div>
+    </div>
+  );
+  if (!detail) return (
+    <div className="emerald-home-container">
+      <div className="emerald-content">
+        <div className="emerald-empty-text">
+          未找到详情
+        </div>
+      </div>
+    </div>
+  );
 
   return (
-    <div className="container" style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
-      <div
-        style={{
-          background: "#fff",
-          borderRadius: 16,
-          boxShadow: "0 4px 24px #e0e7ff",
-          padding: "36px 48px",
-          maxWidth: 540,
-          width: "100%",
-          marginTop: 48,
-        }}
-      >
-        <h1 style={{ color: "#1976d2", fontWeight: 700, marginBottom: 24, fontSize: 28, letterSpacing: 1 }}>种子详情页</h1>
-        <div style={{ marginBottom: 18 }}>
-          <div style={{ fontSize: 20, fontWeight: 600, marginBottom: 8, color: "#222" }}>
-            标题：{detail.title || `种子${torrentId}`}
-          </div>
-          <div style={{ fontSize: 16, color: "#555", marginBottom: 8 }}>
-            简介：{detail.description || `这是种子${torrentId}的详细信息。`}
-          </div>
-        </div>
-        <div style={{ display: "flex", gap: 24, marginTop: 32, justifyContent: "center" }}>
-          <button
+    <div className="emerald-home-container">
+      <div className="emerald-content">
+        <div
+          className="emerald-content-section"
+          style={{
+            maxWidth: 420,
+            margin: "80px auto 0 auto",
+            background: "rgba(255,255,255,0.96)",
+            borderRadius: 18,
+            boxShadow: "0 4px 32px 0 rgba(60,120,60,0.10)",
+            padding: "36px 32px 32px 32px",
+            border: "1px solid #e0e8e0"
+          }}
+        >
+          <div
             style={{
-              padding: "10px 32px",
-              fontSize: "16px",
-              cursor: "pointer",
-              background: "linear-gradient(90deg, #42a5f5 0%, #1976d2 100%)",
-              color: "#fff",
-              border: "none",
-              borderRadius: "8px",
-              fontWeight: 600,
-              boxShadow: "0 2px 8px #b2d8ea",
-              transition: "background 0.2s",
+              fontFamily: "'Lora', serif",
+              fontWeight: 700,
+              fontSize: 26,
+              color: "#2d5016",
+              letterSpacing: 1,
+              marginBottom: 24,
+              textAlign: "center"
             }}
-            onClick={handleClick}
           >
-            下载
-          </button>
-          <button
-            style={{
-              padding: "10px 32px",
-              fontSize: "16px",
-              cursor: "pointer",
-              background: isFavorite
-                ? "linear-gradient(90deg, #ffb74d 0%, #ff9800 100%)"
-                : "linear-gradient(90deg, #f0f0f0 0%, #bdbdbd 100%)",
-              color: isFavorite ? "#fff" : "#333",
-              border: "none",
-              borderRadius: "8px",
+            种子详情
+          </div>
+          <div style={{
+            marginBottom: 24,
+            background: "#f7faf7",
+            borderRadius: 12,
+            padding: "24px 20px",
+            boxShadow: "0 1px 4px 0 rgba(60,120,60,0.04)",
+            border: "1px solid #e5eee5"
+          }}>
+            <div style={{
+              fontSize: 18,
               fontWeight: 600,
-              boxShadow: isFavorite ? "0 2px 8px #ffe0b2" : "0 2px 8px #e0e7ff",
-              transition: "background 0.2s",
-            }}
-            onClick={handleFavorite}
-          >
-            {isFavorite ? "已收藏" : "收藏"}
-          </button>
+              marginBottom: 10,
+              color: "#234d20",
+              fontFamily: "'Lora', serif",
+              wordBreak: "break-all"
+            }}>
+              标题：{detail.title || `种子${torrentId}`}
+            </div>
+            <div style={{
+              fontSize: 15,
+              color: "#4a7c59",
+              fontFamily: "'Lora', serif",
+              lineHeight: 1.7,
+              wordBreak: "break-all"
+            }}>
+              简介：{detail.description || `这是种子${torrentId}的详细信息。`}
+            </div>
+          </div>
+          <div style={{
+            display: "flex",
+            gap: 20,
+            marginTop: 10,
+            justifyContent: "center"
+          }}>
+            <button
+              className="emerald-btn"
+              style={{
+                minWidth: 90,
+                padding: "10px 0",
+                fontSize: "15px",
+                borderRadius: "16px",
+                background: "linear-gradient(90deg, #4caf50 0%, #81c784 100%)",
+                color: "#fff",
+                fontWeight: 600,
+                border: "none",
+                boxShadow: "0 2px 8px rgba(76,175,80,0.10)",
+                fontFamily: "'Lora', serif",
+                cursor: "pointer",
+                transition: "all 0.2s"
+              }}
+              onClick={handleClick}
+            >
+              下载
+            </button>
+            <button
+              className="emerald-btn"
+              style={{
+                minWidth: 90,
+                padding: "10px 0",
+                fontSize: "15px",
+                borderRadius: "16px",
+                background: isFavorite
+                  ? "linear-gradient(90deg, #ffd54f 0%, #ffb300 100%)"
+                  : "linear-gradient(90deg, #e0e0e0 0%, #bdbdbd 100%)",
+                color: isFavorite ? "#fff" : "#444",
+                fontWeight: 600,
+                border: "none",
+                boxShadow: isFavorite ? "0 2px 8px #ffe082" : "0 2px 8px #e0e7ff",
+                fontFamily: "'Lora', serif",
+                cursor: "pointer",
+                transition: "all 0.2s"
+              }}
+              onClick={handleFavorite}
+            >
+              {isFavorite ? "已收藏" : "收藏"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

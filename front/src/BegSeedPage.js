@@ -15,7 +15,7 @@ export default function BegSeedPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showForm, setShowForm] = useState(false);
-    const [refreshKey, setRefreshKey] = useState(0); // 用于强制重新渲染
+    const [refreshKey, setRefreshKey] = useState(0);
     const [formData, setFormData] = useState({
         info: "",
         reward_magic: "",
@@ -122,12 +122,11 @@ export default function BegSeedPage() {
             });
 
             if (response.ok) {
-                // 成功创建，重新获取列表并强制重新渲染
-                setLoading(true); // 显示加载状态
+                setLoading(true);
                 await fetchBegSeedList();
                 setShowForm(false);
                 setFormData({ info: "", reward_magic: "", deadline: "" });
-                setRefreshKey(prev => prev + 1); // 强制重新渲染
+                setRefreshKey(prev => prev + 1);
                 alert("发布成功！");
             } else {
                 const errorData = await response.json();
@@ -135,25 +134,6 @@ export default function BegSeedPage() {
             }
         } catch (err) {
             console.error('发布求种任务失败:', err);
-            // 如果后端调用失败，则使用前端演示逻辑
-            // setLoading(true); // 显示加载状态
-            // const newBegId = "beg" + Math.floor(Math.random() * 10000);
-            // setBegSeedList([
-            //     {
-            //         beg_id: newBegId,
-            //         info: formData.info,
-            //         beg_count: 1,
-            //         reward_magic: Number(formData.reward_magic),
-            //         deadline: formData.deadline,
-            //         has_match: 0,
-            //     },
-            //     ...begSeedList,
-            // ]);
-            // setLoading(false); // 隐藏加载状态
-            // setShowForm(false);
-            // setFormData({ info: "", reward_magic: "", deadline: "" });
-            // setRefreshKey(prev => prev + 1); // 强制重新渲染
-            // alert("发布成功（前端演示）");
         }
     };
 

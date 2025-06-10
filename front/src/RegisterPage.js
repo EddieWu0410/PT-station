@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input } from 'antd';
 import { API_BASE_URL } from './config';
-import './App.css';
+import './LoginPage.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({ username: '', password: '', inviteCode: '', confirmPassword: '' });
@@ -47,52 +47,77 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="register-page" style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #e0e7ff 0%, #f0f8ff 100%)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div className="register-form-container" style={{ width: 360, padding: '40px 32px 64px 32px', borderRadius: 18, boxShadow: '0 8px 32px rgba(60, 80, 180, 0.10)', background: '#fff', position: 'relative' }}>
-        <h1 style={{ textAlign: 'center', marginBottom: 32, color: '#222', fontWeight: 700, fontSize: 32, letterSpacing: 2 }}>欢迎注册</h1>
-        <form className="register-form">
-          <div className="form-row" style={{ marginBottom: 24 }}>
-            <label htmlFor="inviteCode" style={{ display: 'block', marginBottom: 8, color: '#333', fontWeight: 500, fontSize: 16 }}>被邀请邮箱</label>
+    <div className="garden-login-page">
+      {/* 浮动花瓣装饰 */}
+      <div className="floating-petals">
+        <div className="petal">🌸</div>
+        <div className="petal">🌺</div>
+        <div className="petal">🌼</div>
+        <div className="petal">🌷</div>
+        <div className="petal">🌹</div>
+        <div className="petal">🌻</div>
+        <div className="petal">🌸</div>
+        <div className="petal">🌺</div>
+      </div>
+
+      <div className="garden-login-container">
+        {/* 装饰性元素 */}
+        <div className="garden-decoration top-left">🌿</div>
+        <div className="garden-decoration top-right">🦋</div>
+        <div className="garden-decoration bottom-left">🌱</div>
+        <div className="garden-decoration bottom-right">🌳</div>
+        <div className="garden-icon">⚡</div>
+
+        <h1 className="garden-title">注册NeuraFlux</h1>
+
+        <form className="garden-form">
+          <div className="garden-form-group">
+            <label htmlFor="inviteCode" className="garden-label">被邀请邮箱</label>
             <Input
+              className="garden-input"
               placeholder="请输入被邀请邮箱"
               id="inviteCode"
               name="inviteCode"
               value={formData.inviteCode || ''}
               onChange={handleChange}
               required
-              style={{ width: '100%', padding: '12px', borderRadius: 8, fontSize: 16, background: '#f7faff' }}
+              style={{ background: 'rgba(240,255,240,0.5)' }}
             />
+            <div className="garden-input-icon">📧</div>
           </div>
-          <div className="form-row" style={{ marginBottom: 24 }}>
-            <label htmlFor="username" style={{ display: 'block', marginBottom: 8, color: '#333', fontWeight: 500, fontSize: 16 }}>用户名</label>
+          <div className="garden-form-group">
+            <label htmlFor="username" className="garden-label">用户名</label>
             <Input
+              className="garden-input"
               placeholder="请输入用户名"
               id="username"
               name="username"
               value={formData.username}
               onChange={handleChange}
               required
-              style={{ width: '100%', padding: '12px', borderRadius: 8, fontSize: 16, background: '#f7faff' }}
+              style={{ background: 'rgba(240,255,240,0.5)' }}
             />
+            <div className="garden-input-icon">👤</div>
           </div>
-          <div className="form-row" style={{ marginBottom: 24 }}>
-            <label htmlFor="password" style={{ display: 'block', marginBottom: 8, color: '#333', fontWeight: 500, fontSize: 16 }}>密码</label>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Input
-                placeholder="请输入密码"
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                style={{ flex: 1, padding: '12px', borderRadius: 8, fontSize: 16, background: '#f7faff' }}
-              />
-            </div>
-          </div>
-          <div className="form-row" style={{ marginBottom: 24 }}>
-            <label htmlFor="confirmPassword" style={{ display: 'block', marginBottom: 8, color: '#333', fontWeight: 500, fontSize: 16 }}>确认密码</label>
+          <div className="garden-form-group">
+            <label htmlFor="password" className="garden-label">密码</label>
             <Input
+              className="garden-input"
+              placeholder="请输入8位密码"
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              style={{ background: 'rgba(240,255,240,0.5)' }}
+            />
+            <div className="garden-input-icon">🔒</div>
+          </div>
+          <div className="garden-form-group">
+            <label htmlFor="confirmPassword" className="garden-label">确认密码</label>
+            <Input
+              className="garden-input"
               placeholder="请再次输入密码"
               type="password"
               id="confirmPassword"
@@ -100,18 +125,30 @@ const RegisterPage = () => {
               value={formData.confirmPassword || ''}
               onChange={handleChange}
               required
-              style={{ width: '100%', padding: '12px', borderRadius: 8, fontSize: 16, background: '#f7faff' }}
+              style={{ background: 'rgba(240,255,240,0.5)' }}
             />
+            <div className="garden-input-icon">🔒</div>
           </div>
-          {errorMessage && <p style={{ color: '#e53935', textAlign: 'center', marginBottom: 18, fontWeight: 500 }}>{errorMessage}</p>}
-          <div className="form-row button-row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: 0, right: 0, bottom: 24 }}>
+          {errorMessage && (
+            <div className="garden-error">
+              {errorMessage}
+            </div>
+          )}
+          <div className="garden-button-group" style={{ marginTop: 30 }}>
             <button
               type="button"
-              className="register-button"
+              className="garden-button garden-register-btn"
               onClick={handleRegister}
-              style={{ width: 120, padding: '10px 0', borderRadius: 8, border: 'none', background: 'linear-gradient(90deg, #4f8cff 0%, #6ad1ff 100%)', color: '#fff', fontWeight: 600, fontSize: 16, cursor: 'pointer', boxShadow: '0 2px 8px #b2d8ea' }}
             >
-              注册
+              注册神经节点
+            </button>
+            <button
+              type="button"
+              className="garden-button garden-login-btn"
+              style={{ marginTop: 0 }}
+              onClick={() => navigate('/login')}
+            >
+              返回登录
             </button>
           </div>
         </form>
