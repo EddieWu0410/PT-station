@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API_BASE_URL } from "./config";
+import "./AppealPage.css";
 
 export default function SeedPromotionPage() {
     const [seeds, setSeeds] = useState([]);
@@ -117,101 +118,185 @@ export default function SeedPromotionPage() {
     };
 
     return (
-        <div style={{ padding: 40, maxWidth: 900, margin: "0 auto" }}>
-            <h1 style={{ textAlign: "center", marginBottom: 32 }}>种子促销管理</h1>
-            {loading ? (
-                <div style={{ textAlign: "center", color: "#666", margin: 40 }}>正在加载...</div>
-            ) : (
-                <table style={{ width: "100%", background: "#fff", borderRadius: 10, boxShadow: "0 2px 8px #e0e7ff" }}>
-                    <thead>
-                        <tr style={{ background: "#f5f5f5" }}>
-                            <th>标题</th>
-                            <th>标签</th>
-                            <th>热度</th>
-                            <th>促销开始时间</th>
-                            <th>促销结束时间</th>
-                            <th>促销倍率</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {seeds.map((seed) => {
-                            const { start_time, end_time, discount } = seed.promotion;
-                            const endTimeInvalid = isEndTimeInvalid(start_time, end_time);
-                            const canStartPromotion = start_time && end_time && !endTimeInvalid && discount >= 1;
-                            return (
-                                <tr key={seed.seed_id}>
-                                    <td>{seed.title}</td>
-                                    <td>{seed.tags}</td>
-                                    <td>{seed.popularity}</td>
-                                    <td>
-                                        <input
-                                            type="datetime-local"
-                                            value={start_time}
-                                            min={currentTime}
-                                            onChange={(e) =>
-                                                handlePromotionChange(seed.seed_id, "start_time", e.target.value)
-                                            }
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="datetime-local"
-                                            value={end_time}
-                                            min={start_time || currentTime}
-                                            onChange={(e) =>
-                                                handlePromotionChange(seed.seed_id, "end_time", e.target.value)
-                                            }
-                                            style={endTimeInvalid ? { border: "1.5px solid #e53935" } : {}}
-                                        />
-                                        {endTimeInvalid && (
-                                            <div style={{ color: "#e53935", fontSize: 12 }}>
-                                                结束时间不能早于开始时间
-                                            </div>
-                                        )}
-                                    </td>
-                                    <td>
-                                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                                            <button
-                                                style={{ width: 28, height: 28, fontSize: 18, borderRadius: 4, border: "1px solid #ccc", background: "#f5f5f5", cursor: discount > 1 ? "pointer" : "not-allowed" }}
-                                                onClick={() =>
-                                                    discount > 1 &&
-                                                    handlePromotionChange(seed.seed_id, "discount", discount - 1)
-                                                }
-                                                disabled={discount <= 1}
-                                            >-</button>
-                                            <span style={{ minWidth: 24, textAlign: "center" }}>{discount}</span>
-                                            <button
-                                                style={{ width: 28, height: 28, fontSize: 18, borderRadius: 4, border: "1px solid #ccc", background: "#f5f5f5", cursor: "pointer" }}
-                                                onClick={() =>
-                                                    handlePromotionChange(seed.seed_id, "discount", discount + 1)
-                                                }
-                                            >+</button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button
-                                            style={{
-                                                background: canStartPromotion ? "#1976d2" : "#ccc",
-                                                color: "#fff",
-                                                border: "none",
-                                                borderRadius: 6,
-                                                padding: "4px 16px",
-                                                cursor: canStartPromotion ? "pointer" : "not-allowed",
-                                                fontWeight: 600,
-                                            }}
-                                            disabled={!canStartPromotion}
-                                            onClick={() => handleStartPromotion(seed)}
-                                        >
-                                            开启促销
-                                        </button>
-                                    </td>
+        <div className="appeal-page-container">
+            {/* 侧栏 */}
+            <div className="appeal-sidebar">
+                <h3 className="appeal-sidebar-title">种子列表</h3>
+                <div className="appeal-list-container">
+                    {seeds.map(seed => (
+                        <div
+                            key={seed.seed_id}
+                            className="appeal-list-item"
+                            style={{ cursor: "default" }}
+                        >
+                            {seed.title}
+                            <span className="appeal-status-label approved">
+                                {seed.promotion && seed.promotion.start_time && seed.promotion.end_time ? "有促销" : "无促销"}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            {/* 促销详情 */}
+            <div className="appeal-main-content">
+                <h2 className="appeal-detail-title">促销管理</h2>
+                <div className="appeal-detail-card" style={{ overflowX: "auto", padding: 0 }}>
+                    {loading ? (
+                        <div className="appeal-loading" style={{ minHeight: 300 }}>正在加载...</div>
+                    ) : (
+                        <table style={{
+                            width: "100%",
+                            borderCollapse: "collapse",
+                            background: "transparent",
+                            borderRadius: 25,
+                            overflow: "hidden",
+                            margin: 0
+                        }}>
+                            <thead>
+                                <tr style={{
+                                    background: "linear-gradient(90deg, #f0fff0 0%, #98fb98 100%)",
+                                    color: "#2d5016",
+                                    fontWeight: 700,
+                                    fontFamily: "'Lora', serif",
+                                    fontSize: 16
+                                }}>
+                                    <th style={{ padding: "18px 12px" }}>标题</th>
+                                    <th style={{ padding: "18px 12px" }}>标签</th>
+                                    <th style={{ padding: "18px 12px" }}>热度</th>
+                                    <th style={{ padding: "18px 12px" }}>促销开始时间</th>
+                                    <th style={{ padding: "18px 12px" }}>促销结束时间</th>
+                                    <th style={{ padding: "18px 12px" }}>促销倍率</th>
+                                    <th style={{ padding: "18px 12px" }}>操作</th>
                                 </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            )}
+                            </thead>
+                            <tbody>
+                                {seeds.map((seed, idx) => {
+                                    const { start_time, end_time, discount } = seed.promotion;
+                                    const endTimeInvalid = isEndTimeInvalid(start_time, end_time);
+                                    const canStartPromotion = start_time && end_time && !endTimeInvalid && discount >= 1;
+                                    return (
+                                        <tr key={seed.seed_id} style={{
+                                            background: idx % 2 === 0 ? "rgba(240,255,240,0.7)" : "rgba(255,255,255,0.95)",
+                                            fontSize: 15,
+                                            color: "#2d5016"
+                                        }}>
+                                            <td style={{ padding: "16px 12px", fontWeight: 600 }}>{seed.title}</td>
+                                            <td style={{ padding: "16px 12px" }}>{seed.tags}</td>
+                                            <td style={{ padding: "16px 12px" }}>{seed.popularity}</td>
+                                            <td style={{ padding: "16px 12px" }}>
+                                                <input
+                                                    type="datetime-local"
+                                                    value={start_time}
+                                                    min={currentTime}
+                                                    onChange={(e) =>
+                                                        handlePromotionChange(seed.seed_id, "start_time", e.target.value)
+                                                    }
+                                                    className="appeal-form-input"
+                                                    style={{
+                                                        width: 180,
+                                                        background: "rgba(240,255,240,0.5)",
+                                                        border: "2px solid rgba(144, 238, 144, 0.3)",
+                                                        borderRadius: 8,
+                                                        padding: "8px 12px",
+                                                        fontSize: 15,
+                                                        fontFamily: "Lora, serif"
+                                                    }}
+                                                />
+                                            </td>
+                                            <td style={{ padding: "16px 12px" }}>
+                                                <input
+                                                    type="datetime-local"
+                                                    value={end_time}
+                                                    min={start_time || currentTime}
+                                                    onChange={(e) =>
+                                                        handlePromotionChange(seed.seed_id, "end_time", e.target.value)
+                                                    }
+                                                    className="appeal-form-input"
+                                                    style={{
+                                                        width: 180,
+                                                        background: "rgba(240,255,240,0.5)",
+                                                        border: endTimeInvalid ? "2px solid #e53935" : "2px solid rgba(144, 238, 144, 0.3)",
+                                                        borderRadius: 8,
+                                                        padding: "8px 12px",
+                                                        fontSize: 15,
+                                                        fontFamily: "Lora, serif"
+                                                    }}
+                                                />
+                                                {endTimeInvalid && (
+                                                    <div style={{ color: "#e53935", fontSize: 12, marginTop: 4 }}>
+                                                        结束时间不能早于开始时间
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td style={{ padding: "16px 12px" }}>
+                                                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                                    <button
+                                                        className="appeal-btn"
+                                                        style={{
+                                                            width: 32,
+                                                            height: 32,
+                                                            padding: 0,
+                                                            minWidth: 0,
+                                                            borderRadius: 8,
+                                                            fontSize: 18,
+                                                            background: "linear-gradient(135deg, #f0fff0 0%, #98fb98 100%)",
+                                                            color: "#2d5016",
+                                                            border: "1.5px solid #90ee90",
+                                                            fontWeight: 700,
+                                                            boxShadow: "none"
+                                                        }}
+                                                        onClick={() =>
+                                                            discount > 1 &&
+                                                            handlePromotionChange(seed.seed_id, "discount", discount - 1)
+                                                        }
+                                                        disabled={discount <= 1}
+                                                    >-</button>
+                                                    <span style={{ minWidth: 28, textAlign: "center", fontWeight: 700 }}>{discount}</span>
+                                                    <button
+                                                        className="appeal-btn"
+                                                        style={{
+                                                            width: 32,
+                                                            height: 32,
+                                                            padding: 0,
+                                                            minWidth: 0,
+                                                            borderRadius: 8,
+                                                            fontSize: 18,
+                                                            background: "linear-gradient(135deg, #f0fff0 0%, #98fb98 100%)",
+                                                            color: "#2d5016",
+                                                            border: "1.5px solid #90ee90",
+                                                            fontWeight: 700,
+                                                            boxShadow: "none"
+                                                        }}
+                                                        onClick={() =>
+                                                            handlePromotionChange(seed.seed_id, "discount", discount + 1)
+                                                        }
+                                                    >+</button>
+                                                </div>
+                                            </td>
+                                            <td style={{ padding: "16px 12px" }}>
+                                                <button
+                                                    className="appeal-btn appeal-btn-approve"
+                                                    style={{
+                                                        padding: "8px 22px",
+                                                        fontSize: 15,
+                                                        borderRadius: 10,
+                                                        fontWeight: 700,
+                                                        minWidth: 0
+                                                    }}
+                                                    disabled={!canStartPromotion}
+                                                    onClick={() => handleStartPromotion(seed)}
+                                                >
+                                                    开启促销
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }
