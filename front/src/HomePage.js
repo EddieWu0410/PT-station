@@ -12,6 +12,7 @@ import ForumIcon from "@mui/icons-material/Forum";
 import HelpIcon from "@mui/icons-material/Help";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import { API_BASE_URL } from "./config";
 
 // 导航栏
 const navItems = [
@@ -32,6 +33,26 @@ export default function HomePage() {
     const navigate = useNavigate();
     const [recommendSeeds, setRecommendSeeds] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [userInfo, setUserInfo] = useState({ avatar_url: '', username: '' });
+    const [userPT, setUserPT] = useState({ magic: 0, ratio: 0, upload: 0, download: 0 });
+
+    useEffect(() => {
+        const match = document.cookie.match('(^|;)\\s*userId=([^;]+)');
+        const userId = match ? match[2] : null;
+        if (!userId) return;
+        fetch(`${API_BASE_URL}/api/get-userpt?userid=${encodeURIComponent(userId)}`)
+            .then(res => res.json())
+            .then(data => {
+                setUserInfo({ avatar_url: data.user.avatar_url, username: data.user.username });
+                setUserPT({
+                    magic: data.magic_value || data.magic || 0,
+                    ratio: data.share_ratio || data.share || 0,
+                    upload: data.upload_amount || data.upload || 0,
+                    download: data.download_amount || data.download || 0,
+                });
+            })
+            .catch(err => console.error('Fetching user profile failed', err));
+    }, []);
 
     useEffect(() => {
         // 获取当前登录用户ID
@@ -91,7 +112,11 @@ export default function HomePage() {
                 {/* NeuraFlux用户栏 */}
                 <div className="emerald-user-bar">
                     <div className="emerald-user-avatar" onClick={() => navigate('/user')}>
-                        <AccountCircleIcon style={{ fontSize: 38, color: 'white' }} />
+                        {userInfo.avatar_url ? (
+                            <img src={userInfo.avatar_url} alt="用户头像" style={{ width: 38, height: 38, borderRadius: '50%', objectFit: 'cover' }} />
+                        ) : (
+                            <AccountCircleIcon style={{ fontSize: 38, color: 'white' }} />
+                        )}
                     </div>
                     <div className="emerald-brand-section">
                         <div className="emerald-brand-icon">⚡</div>
@@ -99,16 +124,16 @@ export default function HomePage() {
                     </div>
                     <div className="emerald-user-stats">
                         <span className="emerald-stat-item">
-                            魔力值: <span className="emerald-stat-value">12,345</span>
+                            魔力值: <span className="emerald-stat-value">{userPT.magic}</span>
                         </span>
                         <span className="emerald-stat-item">
-                            分享率: <span className="emerald-stat-value">2.56</span>
+                            分享率: <span className="emerald-stat-value">{userPT.ratio}</span>
                         </span>
                         <span className="emerald-stat-item">
-                            上传: <span className="emerald-stat-value">100GB</span>
+                            上传: <span className="emerald-stat-value">{userPT.upload}GB</span>
                         </span>
                         <span className="emerald-stat-item">
-                            下载: <span className="emerald-stat-value">50GB</span>
+                            下载: <span className="emerald-stat-value">{userPT.download}GB</span>
                         </span>
                     </div>
                 </div>
@@ -129,45 +154,51 @@ export default function HomePage() {
                 </nav>
 
                 {/* NeuraFlux种子列表 */}
-                <div className="emerald-table-section">
-                    <table className="emerald-table">
-                        <thead>
-                            <tr>
-                                <th>分类标签</th>
-                                <th>标题</th>
-                                <th>发布者</th>
-                                <th>大小</th>
-                                <th>热度</th>
-                                <th>折扣倍率</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {loading ? (
+                <div className="emerald-content-section">
+                    <h1 className="emerald-page-title">🌟 推荐资源</h1>
+                    <p style={{ textAlign: 'center', color: '#2d5016', fontSize: '18px', marginBottom: '30px' }}>
+                        欢迎来到NeuraFlux，为你精选个性化推荐资源
+                    </p>
+                    <div className="emerald-table-section">
+                        <table className="emerald-table">
+                            <thead>
                                 <tr>
-                                    <td colSpan={6} style={{ textAlign: "center", color: "#888" }}>正在加载推荐种子...</td>
+                                    <th>分类标签</th>
+                                    <th>标题</th>
+                                    <th>发布者</th>
+                                    <th>大小</th>
+                                    <th>热度</th>
+                                    <th>折扣倍率</th>
                                 </tr>
-                            ) : recommendSeeds.length === 0 ? (
-                                <tr>
-                                    <td colSpan={6} style={{ textAlign: "center", color: "#888" }}>暂无推荐数据</td>
-                                </tr>
-                            ) : (
-                                recommendSeeds.map((seed) => (
-                                    <tr key={seed.seed_id}>
-                                        <td>{seed.tags}</td>
-                                        <td>
-                                            <a href={`/torrent/${seed.seed_id}`}>
-                                                {seed.title}
-                                            </a>
-                                        </td>
-                                        <td>{seed.username}</td>
-                                        <td>{seed.size}</td>
-                                        <td>{seed.popularity}</td>
-                                        <td>{seed.discount == null ? 1 : seed.discount}</td>
+                            </thead>
+                            <tbody>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan={6} style={{ textAlign: "center", color: "#888" }}>正在加载推荐资源...</td>
                                     </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
+                                ) : recommendSeeds.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={6} style={{ textAlign: "center", color: "#888" }}>暂无推荐资源</td>
+                                    </tr>
+                                ) : (
+                                    recommendSeeds.map((seed) => (
+                                        <tr key={seed.seed_id}>
+                                            <td>{seed.tags}</td>
+                                            <td>
+                                                <a href={`/torrent/${seed.seed_id}`}>
+                                                    {seed.title}
+                                                </a>
+                                            </td>
+                                            <td>{seed.username}</td>
+                                            <td>{seed.size}</td>
+                                            <td>{seed.popularity}</td>
+                                            <td>{seed.discount == null ? 1 : seed.discount}</td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

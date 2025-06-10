@@ -14,11 +14,6 @@ const LoginPage = () => {
   };
 
   const handleLogin = async () => {
-    // 进入管理员页面
-    // if (formData.username === "admin" && formData.password === "admin123") {
-    //   navigate('/admin');
-    //   return;
-    // }
 
     if (formData.password.length < 8) {
       setErrorMessage('密码必须至少包含八位字符！');
@@ -27,7 +22,6 @@ const LoginPage = () => {
 
     // send login request to backend
     try {
-      // console.log('登录信息:', formData);
       const response = await fetch(`${API_BASE_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -93,11 +87,11 @@ const LoginPage = () => {
         <div className="garden-decoration top-left">🌿</div>
         <div className="garden-decoration top-right">🦋</div>
         <div className="garden-decoration bottom-left">🌱</div>
-        <div className="garden-decoration bottom-right">🌳</div>        {/* 顶部图标 */}
+        <div className="garden-decoration bottom-right">🌳</div>
         <div className="garden-icon">⚡</div>
-        
+
         <h1 className="garden-title">NeuraFlux</h1>
-        
+
         <form className="garden-form">
           <div className="garden-form-group">
             <label htmlFor="username" className="garden-label">邮箱地址</label>
@@ -113,7 +107,7 @@ const LoginPage = () => {
             />
             <div className="garden-input-icon">📧</div>
           </div>
-          
+
           <div className="garden-form-group">
             <label htmlFor="password" className="garden-label">密码</label>
             <input
@@ -128,14 +122,15 @@ const LoginPage = () => {
             />
             <div className="garden-input-icon">🔒</div>
           </div>
-          
+
           {errorMessage && (
             <div className="garden-error">
               {errorMessage}
             </div>
           )}
-          
-          <div className="garden-button-group">            <button
+
+          <div className="garden-button-group">
+            <button
               type="button"
               className="garden-button garden-login-btn"
               onClick={handleLogin}            >

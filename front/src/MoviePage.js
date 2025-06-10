@@ -10,11 +10,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ForumIcon from "@mui/icons-material/Forum";
 import HelpIcon from "@mui/icons-material/Help";
-import { useNavigate } from "react-router-dom";
 import "./SharedStyles.css";
+import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "./config";
 
-// 导航栏
 const navItems = [
     { label: "首页", icon: <HomeIcon className="emerald-nav-icon" />, path: "/home", type: "home" },
     { label: "电影", icon: <MovieIcon className="emerald-nav-icon" />, path: "/movie", type: "movie" },
@@ -64,23 +63,12 @@ export default function MoviePage() {
             .catch(err => console.error('Fetching user profile failed', err));
     }, []);
 
-    // 每个tab对应的电影类型
-    const movieTypesList = [
-        ["华语电影（大陆）", "欧美电影", "日韩电影", "港台电影", "其他"], // 大陆
-        ["港台动作", "港台爱情", "港台喜剧", "港台其他"], // 港台
-        ["欧美动作", "欧美科幻", "欧美剧情", "欧美其他"], // 欧美
-        ["日韩动画", "日韩爱情", "日韩其他"], // 日韩
-        ["其他类型1", "其他类型2"] // 其他
-    ];
-    const movieTypes = movieTypesList[activeTab] || [];
-
     React.useEffect(() => {
+        // 根据选中的标签获取电影列表
         const area = areaTabs[activeTab].label;
         fetch(`${API_BASE_URL}/api/get-seed-list-by-tag?tag=${encodeURIComponent(area)}`)
             .then(res => res.json())
-            .then(data => {
-                setMovieList(data);
-            })
+            .then(data => setMovieList(data))
             .catch(() => setMovieList([]));
     }, [activeTab]);
 
@@ -94,6 +82,15 @@ export default function MoviePage() {
             })
             .catch(() => setMovieList([]));
     };
+
+    const movieTypesList = [
+        ["华语电影（大陆）", "欧美电影", "日韩电影", "港台电影", "其他"], // 大陆
+        ["港台动作", "港台爱情", "港台喜剧", "港台其他"], // 港台
+        ["欧美动作", "欧美科幻", "欧美剧情", "欧美其他"], // 欧美
+        ["日韩动画", "日韩爱情", "日韩其他"], // 日韩
+        ["其他类型1", "其他类型2"] // 其他
+    ];
+    const movieTypes = movieTypesList[activeTab] || [];
 
     return (
         <div className="emerald-home-container">
@@ -123,7 +120,11 @@ export default function MoviePage() {
                 {/* NeuraFlux用户栏 */}
                 <div className="emerald-user-bar">
                     <div className="emerald-user-avatar" onClick={() => navigate('/user')}>
-                        <AccountCircleIcon style={{ fontSize: 38, color: 'white' }} />
+                        {userInfo.avatar_url ? (
+                            <img src={userInfo.avatar_url} alt="用户头像" style={{ width: 38, height: 38, borderRadius: '50%', objectFit: 'cover' }} />
+                        ) : (
+                            <AccountCircleIcon style={{ fontSize: 38, color: 'white' }} />
+                        )}
                     </div>
                     <div className="emerald-brand-section">
                         <div className="emerald-brand-icon">⚡</div>
@@ -131,16 +132,16 @@ export default function MoviePage() {
                     </div>
                     <div className="emerald-user-stats">
                         <span className="emerald-stat-item">
-                            魔力值: <span className="emerald-stat-value">12,345</span>
+                            魔力值: <span className="emerald-stat-value">{userPT.magic}</span>
                         </span>
                         <span className="emerald-stat-item">
-                            分享率: <span className="emerald-stat-value">2.56</span>
+                            分享率: <span className="emerald-stat-value">{userPT.ratio}</span>
                         </span>
                         <span className="emerald-stat-item">
-                            上传: <span className="emerald-stat-value">100GB</span>
+                            上传: <span className="emerald-stat-value">{userPT.upload}GB</span>
                         </span>
                         <span className="emerald-stat-item">
-                            下载: <span className="emerald-stat-value">50GB</span>
+                            下载: <span className="emerald-stat-value">{userPT.download}GB</span>
                         </span>
                     </div>
                 </div>
@@ -163,11 +164,144 @@ export default function MoviePage() {
                 {/* 电影内容区域 */}
                 <div className="emerald-content-section">
                     <h1 className="emerald-page-title">🎬 电影资源</h1>
-                    <p style={{ textAlign: 'center', color: '#2d5016', fontSize: '18px' }}>
+                    <p style={{ textAlign: 'center', color: '#2d5016', fontSize: '18px', marginBottom: '30px' }}>
                         欢迎来到NeuraFlux电影频道，这里有最新最热门的电影资源
                     </p>
+
+                    {/* 搜索栏 */}
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginBottom: '30px',
+                        gap: '15px'
+                    }}>
+                        <input
+                            type="text"
+                            placeholder="搜索电影资源..."
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                            style={{
+                                padding: '12px 20px',
+                                borderRadius: '20px',
+                                border: '2px solid rgba(144, 238, 144, 0.3)',
+                                background: 'rgba(240, 255, 240, 0.5)',
+                                fontSize: '16px',
+                                width: '300px',
+                                fontFamily: 'Lora, serif'
+                            }}
+                        />
+                        <button
+                            onClick={handleSearch}
+                            style={{
+                                padding: '12px 24px',
+                                borderRadius: '20px',
+                                border: 'none',
+                                background: 'linear-gradient(135deg, #2d5016 0%, #90ee90 100%)',
+                                color: 'white',
+                                fontSize: '16px',
+                                cursor: 'pointer',
+                                fontFamily: 'Lora, serif'
+                            }}
+                        >
+                            搜索
+                        </button>
+                    </div>
+
+                    {/* 地区分类标签 */}
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginBottom: '30px',
+                        gap: '15px',
+                        flexWrap: 'wrap'
+                    }}>
+                        {areaTabs.map((tab, index) => (
+                            <button
+                                key={tab.value}
+                                onClick={() => setActiveTab(index)}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '15px',
+                                    border: '2px solid rgba(144, 238, 144, 0.3)',
+                                    background: activeTab === index
+                                        ? 'linear-gradient(135deg, #90ee90 0%, #2d5016 100%)'
+                                        : 'rgba(240, 255, 240, 0.3)',
+                                    color: activeTab === index ? 'white' : '#2d5016',
+                                    fontSize: '14px',
+                                    cursor: 'pointer',
+                                    fontFamily: 'Lora, serif',
+                                    transition: 'all 0.3s ease'
+                                }}
+                            >
+                                {tab.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* 电影列表 */}
+                    <div className="emerald-table-section">
+                        <table className="emerald-table">
+                            <thead>
+                                <tr>
+                                    <th>电影类型</th>
+                                    <th>标题</th>
+                                    <th>发布者</th>
+                                    <th>大小</th>
+                                    <th>热度</th>
+                                    <th>折扣倍率</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {movieList.length > 0 ? (
+                                    movieList.map((item, index) => (
+                                        <tr key={item.id || index}>
+                                            <td>{item.seedtag}</td>
+                                            <td>
+                                                <a href={`/torrent/${item.seedid}`}>
+                                                    {item.title}
+                                                </a>
+                                            </td>
+                                            <td>{item.username}</td>
+                                            <td>{item.seedsize}</td>
+                                            <td>{item.downloadtimes}</td>
+                                            <td>{item.discount == null ? 1 : item.discount}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    movieTypes.map((type, index) => (
+                                        <tr key={type}>
+                                            <td>{type}</td>
+                                            <td>
+                                                <a href={`/torrent/${type}`}>
+                                                    种子{index + 1}
+                                                </a>
+                                            </td>
+                                            <td>发布者{index + 1}</td>
+                                            <td>--</td>
+                                            <td>--</td>
+                                            <td>1</td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+        </div>
+    );
+}
+
+// Pagination组件暂时不使用
+function Pagination() {
+    const [page, setPage] = React.useState(3);
+    const total = 5;
+    return (
+        <div className="pagination">
+            <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>上一页</button>
+            <span className="page-num">{page}/{total}</span>
+            <button onClick={() => setPage(p => Math.min(total, p + 1))} disabled={page === total}>下一页</button>
+            <span className="page-info">第 <b>{page}</b> 页</span>
         </div>
     );
 }

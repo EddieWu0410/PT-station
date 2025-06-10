@@ -92,6 +92,7 @@ export default function MusicPage() {
     ["古典音乐", "世界音乐", "其他类型"] // 其他音乐
   ];
   const musicTypes = musicTypesList[activeTab] || [];
+
   return (
     <div className="emerald-home-container">
       {/* 流星雨背景效果 */}
@@ -167,11 +168,11 @@ export default function MusicPage() {
           <p style={{ textAlign: 'center', color: '#2d5016', fontSize: '18px', marginBottom: '30px' }}>
             欢迎来到NeuraFlux音乐频道，这里有最新最热门的音乐资源
           </p>
-          
+
           {/* 搜索栏 */}
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
             marginBottom: '30px',
             gap: '15px'
           }}>
@@ -208,9 +209,9 @@ export default function MusicPage() {
           </div>
 
           {/* 地区分类标签 */}
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
             marginBottom: '30px',
             gap: '15px',
             flexWrap: 'wrap'
@@ -223,8 +224,8 @@ export default function MusicPage() {
                   padding: '10px 20px',
                   borderRadius: '15px',
                   border: '2px solid rgba(144, 238, 144, 0.3)',
-                  background: activeTab === index 
-                    ? 'linear-gradient(135deg, #90ee90 0%, #2d5016 100%)' 
+                  background: activeTab === index
+                    ? 'linear-gradient(135deg, #90ee90 0%, #2d5016 100%)'
                     : 'rgba(240, 255, 240, 0.3)',
                   color: activeTab === index ? 'white' : '#2d5016',
                   fontSize: '14px',
